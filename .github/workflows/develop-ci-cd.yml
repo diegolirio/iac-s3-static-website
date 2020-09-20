@@ -1,4 +1,4 @@
-name: IaC - Develop CI/CD - S3 Static WebSite
+name: Prodution - IaC CI/CD - S3 Static WebSite
 
 on:
   push:
