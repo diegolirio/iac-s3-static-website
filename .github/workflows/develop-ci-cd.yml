@@ -1,12 +1,12 @@
 name: Prodution - IaC CI/CD - S3 Static WebSite
 
 env:
-  parametersJson: './parameters/parameters-prod.json'
+  parametersJson: './parameters/parameters-dev.json'
 
 on:
   push:
     branches:
-      - master
+      - develop
 
 jobs:
   deploy:
