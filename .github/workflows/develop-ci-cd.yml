@@ -22,8 +22,8 @@ jobs:
     - name: Deploy via CloudFormation
       run: |
         
-        Name=$(jq '.Name' ./infra/parameters-prod.json)
-        StackName=$(jq '.StackName' ./infra/parameters-prod.json)
+        Name=$(jq '.Name' ./infra/parameters-prod.json | sed -e 's/"//g')
+        StackName=$(jq '.StackName' ./infra/parameters-prod.json  | sed -e 's/"//g')
 
         aws cloudformation deploy --template-file ./infra/S3-CF.yml \
                                   --stack-name $Name \
