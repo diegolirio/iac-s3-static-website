@@ -25,6 +25,8 @@ jobs:
     - name: Deploy via CloudFormation
       run: |
         
+        echo ${{ env.GITHUB_REF }}
+
         Name=$(jq '.Name' ${{ env.parametersJson }} | sed -e 's/"//g')
         StackName=$(jq '.StackName' ${{ env.parametersJson }}  | sed -e 's/"//g')
 
