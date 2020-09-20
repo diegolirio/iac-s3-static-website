@@ -9,6 +9,9 @@ jobs:
   deploy:
     name: deploy
     runs-on: ubuntu-latest
+    strategy:
+      region: us-east-2
+
     steps:
     
     - uses: actions/checkout@v2
@@ -18,11 +21,13 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-east-2
+        aws-region: ${{ region }}
 
     - name: Deploy via CloudFormation
       run: |
         aws cloudformation deploy --template-file ./infra/S3-CF.yml \
                      --stack-name S3AphroditeFront-Prod \
-                     --parameters  Name=www.aphrodite.world
+                     --parameters  ParameterKey=Name,ParameterValue=www.aphrodite.world \
+                     --regions ${{ region }} 
+
     
