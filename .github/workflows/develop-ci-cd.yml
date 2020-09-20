@@ -23,6 +23,6 @@ jobs:
     - name: Deploy via CloudFormation
       run: |
         aws cloudformation deploy --template-file ./infra/S3-CF.yml \
-                     --stack-name S3AphroditeFront-Prod
+                     --stack-name S3AphroditeFront-Prod \
                      --parameters  Name=www.aphrodite.world
     
