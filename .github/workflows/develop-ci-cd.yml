@@ -21,9 +21,13 @@ jobs:
 
     - name: Deploy via CloudFormation
       run: |
+        
+        Name=$(jq '.Name' ./infra/parameters-prod.json)
+        StackName=$(jq '.StackName' ./infra/parameters-prod.json)
+
         aws cloudformation deploy --template-file ./infra/S3-CF.yml \
-                                  --stack-name S3AphroditeFront-Prod \
-                                  --parameter-overrides  Name=www.aphrodite.world \
+                                  --stack-name $Name \
+                                  --parameter-overrides  Name=$StackName \
                                   --tags Name=Aphrodite Author="Diego Lirio"
 
     
