@@ -1,15 +1,14 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: >
-  Template S3 Frontend Escort Guides
+  Template S3 Static Web Site Aphrodite
 
 Parameters:
   Name:
     Description: Frontend Name
     Type: String
-    Default: dev.aphrodite.world
 
 Resources:
-  S3EscortGuides:
+  S3StaticWebSiteAphrodite:
     Type: AWS::S3::Bucket
     Properties: 
       #AccelerateConfiguration: 
