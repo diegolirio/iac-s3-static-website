@@ -1,4 +1,4 @@
 {
-    "Name": "dev.aphrodite.world",
-    "StackName": "S3AphroditeFront-Dev"
+    "Name": "www.aphrodite.world",
+    "StackName": "S3AphroditeFront-Prod"
 }

@@ -21,6 +21,9 @@ jobs:
 
     - name: Deploy via CloudFormation
       run: |
-        aws cloudformation deploy --template-file ./infra/S3-CF.yml --stack-name S3AphroditeFront-Prod
+        aws cloudformation deploy --template-file ./infra/S3-CF.yml \
+                                  --stack-name S3AphroditeFront-Prod \
+                                  --parameter-overrides  Name=www.aphrodite.world \
+                                  --tags Name=Aphrodite Author="Diego Lirio"
 
     
