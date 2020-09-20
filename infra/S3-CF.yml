@@ -6,6 +6,7 @@ Parameters:
   Name:
     Description: Frontend Name
     Type: String
+    Default: www.aphrodite.world
 
 Resources:
   S3StaticWebSiteAphrodite:

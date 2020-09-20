@@ -21,9 +21,12 @@ jobs:
 
     - name: Deploy via CloudFormation
       run: |
+#        aws cloudformation deploy --template-file ./infra/S3-CF.yml \
+#                     --stack-name S3AphroditeFront-Prod \
+#                     --parameters  ParameterKey=Name,ParameterValue=www.aphrodite.world \
+#                     --regions us-east-2
         aws cloudformation deploy --template-file ./infra/S3-CF.yml \
                      --stack-name S3AphroditeFront-Prod \
-                     --parameters  ParameterKey=Name,ParameterValue=www.aphrodite.world \
                      --regions us-east-2
 
     
