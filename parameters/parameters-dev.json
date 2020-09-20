@@ -1,4 +1,5 @@
 {
     "Name": "dev.aphrodite.world",
-    "StackName": "S3AphroditeFront-Dev"
+    "StackName": "S3AphroditeFront-Dev",
+    "PolicyJson": "bucket-policy.json"
 }
