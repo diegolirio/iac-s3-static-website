@@ -26,8 +26,8 @@ jobs:
         StackName=$(jq '.StackName' ./infra/parameters-prod.json  | sed -e 's/"//g')
 
         aws cloudformation deploy --template-file ./infra/S3-CF.yml \
-                                  --stack-name $Name \
-                                  --parameter-overrides  Name=$StackName \
+                                  --stack-name $StackName \
+                                  --parameter-overrides  Name=$Name \
                                   --tags Name=Aphrodite Author="Diego Lirio"
 
     
