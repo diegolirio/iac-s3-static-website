@@ -1,0 +1,55 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: >
+  Template S3 Frontend Escort Guides
+
+Parameters:
+  Name:
+    Description: Frontend Name
+    Type: String
+    Default: dev.aphrodite.world
+
+Resources:
+  S3EscortGuides:
+    Type: AWS::S3::Bucket
+    Properties: 
+      #AccelerateConfiguration: 
+      #  AccelerateConfiguration
+      AccessControl: PublicRead
+      #AnalyticsConfigurations: 
+      #  - AnalyticsConfiguration
+      #BucketEncryption: 
+      #  BucketEncryption
+      BucketName: !Ref Name
+      #CorsConfiguration: 
+      #  CorsConfiguration
+      #InventoryConfigurations: 
+      #  - InventoryConfiguration
+      #LifecycleConfiguration: 
+      #  LifecycleConfiguration
+      #LoggingConfiguration: 
+      #  LoggingConfiguration
+      #MetricsConfigurations: 
+      #  - MetricsConfiguration
+      #NotificationConfiguration: 
+      #  NotificationConfiguration
+      #ObjectLockConfiguration: 
+      #  ObjectLockConfiguration
+      #ObjectLockEnabled: Boolean
+      PublicAccessBlockConfiguration: 
+        BlockPublicAcls: false
+        BlockPublicPolicy: false
+        IgnorePublicAcls: false
+        RestrictPublicBuckets: false
+      #ReplicationConfiguration: 
+      #  ReplicationConfiguration
+      #Tags: 
+      #  - Tag
+      #VersioningConfiguration: 
+      # VersioningConfiguration
+      WebsiteConfiguration: 
+        #ErrorDocument: String
+        IndexDocument: index.html
+        #RedirectAllRequestsTo: 
+        #  RedirectAllRequestsTo
+        #RoutingRules: 
+        #  - RoutingRule
