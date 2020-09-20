@@ -1,7 +1,7 @@
 name: Prodution - IaC CI/CD - S3 Static WebSite
 
 env:
-  parametersJson: './parameters/parameters-prod.json'
+  env: prod
 
 on:
   push:
@@ -14,28 +14,35 @@ jobs:
     runs-on: ubuntu-latest
     steps:    
     - uses: actions/checkout@v2
-
-    - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-east-2
-
-    - name: Deploy via CloudFormation
+    - name: 
       run: |
+        print 'Hello Github Actions'
+        print ${{ github.ref }}
+        print ${{ github.head_ref }}
+        print ${{ github.base_ref }}
+        print ${{ github.repository_owner }}
+        print ${{ github.actor }}
+    # - name: Configure AWS Credentials
+    #   uses: aws-actions/configure-aws-credentials@v1
+    #   with:
+    #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    #     aws-region: us-east-2
+
+    # - name: Deploy via CloudFormation
+    #   run: |
         
-        Name=$(jq           '.Name'       ${{ env.parametersJson }} | sed -e 's/"//g')
-        StackName=$(jq      '.StackName'  ${{ env.parametersJson }} | sed -e 's/"//g')
-        PolicyJsonFile=$(jq '.PolicyJson' ${{ env.parametersJson }} | sed -e 's/"//g')
+    #     Name=$(jq           '.Name'       ${{env.env}}/parameters.json | sed -e 's/"//g')
+    #     StackName=$(jq      '.StackName'  ${{env.env}}/parameters.json | sed -e 's/"//g')
+    #     PolicyJsonFile=$(jq '.PolicyJson' ${{env.env}}/parameters.json | sed -e 's/"//g')
 
-        aws cloudformation deploy --template-file ./infra/S3-CF.yml \
-                                  --stack-name $StackName \
-                                  --parameter-overrides  Name=$Name \
-                                  --tags Name=Aphrodite Author="Diego Lirio"
+    #     aws cloudformation deploy --template-file template.yml \
+    #                               --stack-name $StackName \
+    #                               --parameter-overrides  Name=$Name \
+    #                               --tags Name=Aphrodite Author="Diego Lirio"
 
-        policyJson=$(cat ./infra/$PolicyJsonFile)
-        aws s3api put-bucket-policy --bucket $Name --policy "$policyJson"                                  
+    #     policyJson=$(cat ./infra/$PolicyJsonFile)
+    #     aws s3api put-bucket-policy --bucket $Name --policy "$policyJson"                                  
     
 
     

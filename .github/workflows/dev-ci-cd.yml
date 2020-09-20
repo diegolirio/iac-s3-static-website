@@ -29,7 +29,7 @@ jobs:
         StackName=$(jq      '.StackName'  ${{ env.parametersJson }} | sed -e 's/"//g')
         PolicyJsonFile=$(jq '.PolicyJson' ${{ env.parametersJson }} | sed -e 's/"//g')
 
-        aws cloudformation deploy --template-file ./infra/S3-CF.yml \
+        aws cloudformation deploy --template-file template.yml \
                                   --stack-name $StackName \
                                   --parameter-overrides  Name=$Name \
                                   --tags Name=Aphrodite Author="Diego Lirio"
