@@ -1,8 +1,5 @@
 name: Prodution - IaC CI/CD - S3 Static WebSite
 
-env:
-  env: ${{  == 'refs/heads/master' ? 'prod' : 'dev' }}
-
 on:
   push:
     branches:
