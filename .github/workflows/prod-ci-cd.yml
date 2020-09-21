@@ -16,12 +16,12 @@ jobs:
     - uses: actions/checkout@v2
     - name: 
       run: |
-        print "Hello Github Actions"
-        print ${{ github.ref }}
-        print ${{ github.head_ref }}
-        print ${{ github.base_ref }}
-        print ${{ github.repository_owner }}
-        print ${{ github.actor }}
+        echo "Hello Github Actions"
+        echo ${{ github.ref }}
+        echo ${{ github.head_ref }}
+        echo ${{ github.base_ref }}
+        echo ${{ github.repository_owner }}
+        echo ${{ github.actor }}
     # - name: Configure AWS Credentials
     #   uses: aws-actions/configure-aws-credentials@v1
     #   with:
