@@ -1,25 +1,33 @@
 # Deploy ( IaC S3 Static WebSite )
 
-```shell 
-aws cloudformation deploy --template-file S3-CF.yml --stack-name S3AphroditeFront-Dev
-```
+## Do you want to add new environment ?
 
-`Deploy Application`
+- Create New File ==> ./github/workflows/NEW_ENV-ci-cd.yml
 
-```sh
-cd ..
-npm run build --prod
-aws s3 sync --cache-control 'no-cache' ./dist s3://dev.aphrodite.world
-```
+> Copy content from dev-ci-cd.yml and changes properties above:   
 
-## Undeploy
+```yml
+env:
+  env: hom
 
-```sh
-aws cloudformation delete-stack --stack-name S3AphroditeFront-Dev
-```
+on:
+  push:
+    branches:
+      - staging
+```      
 
-`Empty a bucket`
+## Undeploy ( Delete Stack)
+
+
+
+`Empty a bucket:`
 
 ```sh
 aws s3 rm s3://dev.aphrodite.world --recursive
+```
+
+`Delete CloudFormation:`
+
+```sh
+aws cloudformation delete-stack --stack-name S3AphroditeFront-Dev
 ```
