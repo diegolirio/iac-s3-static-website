@@ -1,12 +1,9 @@
-name: Prodution - IaC CI/CD - S3 Static WebSite
-
-env:
-  env: prod
+name: Teste - IaC CI/CD - S3 Static WebSite
 
 on:
   push:
     branches:
-      - master
+      - teste-diego
 
 jobs:
   deploy:
@@ -14,6 +11,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:    
     - uses: actions/checkout@v2
+    
+    - name: Set Environment Prodution
+      if: endsWith(github.ref, 'master')
+      id: environment
+      run: echo "::set-output name=ENV::prod"
+
+    - name: Set Environment Develop
+      if: endsWith(github.ref, 'develop')
+      id: environment
+      run: echo "::set-output name=ENV::dev"        
 
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -24,8 +31,7 @@ jobs:
 
     - name: Deploy via CloudFormation
       run: |
-        
-        ENV=${{env.env}}
+        ENV=${{steps.environment.outputs.ENV}}
 
         Name=$(jq           '.Name'       $ENV/parameters.json | sed -e 's/"//g')
         StackName=$(jq      '.StackName'  $ENV/parameters.json | sed -e 's/"//g')
@@ -37,4 +43,8 @@ jobs:
                                   --tags Name=Aphrodite Author="Diego Lirio"
 
         policyJson=$(cat ./$ENV/$PolicyJsonFile)
-        aws s3api put-bucket-policy --bucket $Name --policy "$policyJson"
+        aws s3api put-bucket-policy --bucket $Name --policy "$policyJson"                                  
+    
+
+    
+    

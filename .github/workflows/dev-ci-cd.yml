@@ -1,7 +1,7 @@
 name: Prodution - IaC CI/CD - S3 Static WebSite
 
 env:
-  parametersJson: './parameters/parameters-dev.json'
+  env: dev
 
 on:
   push:
@@ -25,15 +25,16 @@ jobs:
     - name: Deploy via CloudFormation
       run: |
         
-        Name=$(jq           '.Name'       ${{ env.parametersJson }} | sed -e 's/"//g')
-        StackName=$(jq      '.StackName'  ${{ env.parametersJson }} | sed -e 's/"//g')
-        PolicyJsonFile=$(jq '.PolicyJson' ${{ env.parametersJson }} | sed -e 's/"//g')
+        ENV=${{env.env}}
+
+        Name=$(jq           '.Name'       $ENV/parameters.json | sed -e 's/"//g')
+        StackName=$(jq      '.StackName'  $ENV/parameters.json | sed -e 's/"//g')
+        PolicyJsonFile=$(jq '.PolicyJson' $ENV/parameters.json | sed -e 's/"//g')
 
         aws cloudformation deploy --template-file template.yml \
                                   --stack-name $StackName \
                                   --parameter-overrides  Name=$Name \
                                   --tags Name=Aphrodite Author="Diego Lirio"
 
-        policyJson=$(cat ./infra/$PolicyJsonFile)
-        aws s3api put-bucket-policy --bucket $Name --policy "$policyJson"                                  
-    
+        policyJson=$(cat ./$ENV/$PolicyJsonFile)
+        aws s3api put-bucket-policy --bucket $Name --policy "$policyJson"
