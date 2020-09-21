@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:    
     - name: Set Environment Prod
-      if: endsWith(github.ref) == 'master'
+      if: endsWith(github.ref, 'master')
       run: |
         echo "Hello Github Actions"
         run: echo ::set-output name=ENV::prod}
