@@ -16,7 +16,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: 
       run: |
-        print 'Hello Github Actions'
+        print "Hello Github Actions"
         print ${{ github.ref }}
         print ${{ github.head_ref }}
         print ${{ github.base_ref }}
