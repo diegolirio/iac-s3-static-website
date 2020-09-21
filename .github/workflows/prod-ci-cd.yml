@@ -1,7 +1,7 @@
 name: Prodution - IaC CI/CD - S3 Static WebSite
 
 env:
-  env: ${{ github.ref == 'refs/heads/master' ? 'prod' : 'dev' }}
+  env: ${{  == 'refs/heads/master' ? 'prod' : 'dev' }}
 
 on:
   push:
@@ -13,12 +13,19 @@ jobs:
     name: deploy
     runs-on: ubuntu-latest
     steps:    
-    - uses: actions/checkout@v2
-    - name: 
+    - name: Set Environment Prod
+      if: endsWith(github.ref) == 'master'
       run: |
         echo "Hello Github Actions"
-        echo ${{ env.env }}
-        
+        run: echo ::set-output name=ENV::prod}
+
+    - uses: actions/checkout@v2
+
+    - name: TESTE
+      run: |
+        echo "Hello Github Actions"
+        echo ${{ steps.step_one.outputs.ENV }}
+
     # - name: Configure AWS Credentials
     #   uses: aws-actions/configure-aws-credentials@v1
     #   with:
