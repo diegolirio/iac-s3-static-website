@@ -12,6 +12,7 @@ jobs:
     steps:    
     - name: Set Environment Prod
       if: endsWith(github.ref, 'master')
+      id: environment
       run: |
         echo "Hello Github Actions"
         echo "::set-output name=ENV::prod"
@@ -21,7 +22,7 @@ jobs:
     - name: TESTE
       run: |
         echo "Hello Github Actions"
-        echo ${{ steps.step_one.outputs.ENV }}
+        echo ${{ steps.environment.outputs.ENV }}
 
     # - name: Configure AWS Credentials
     #   uses: aws-actions/configure-aws-credentials@v1
