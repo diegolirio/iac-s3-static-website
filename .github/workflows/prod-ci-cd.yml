@@ -1,7 +1,7 @@
 name: Prodution - IaC CI/CD - S3 Static WebSite
 
 env:
-  env: prod
+  env: ${{ github.ref == 'refs/heads/master' ? 'prod' : 'dev' }}
 
 on:
   push:
@@ -17,11 +17,8 @@ jobs:
     - name: 
       run: |
         echo "Hello Github Actions"
-        echo ${{ github.ref }}
-        echo ${{ github.head_ref }}
-        echo ${{ github.base_ref }}
-        echo ${{ github.repository_owner }}
-        echo ${{ github.actor }}
+        echo ${{ env.env }}
+        
     # - name: Configure AWS Credentials
     #   uses: aws-actions/configure-aws-credentials@v1
     #   with:
