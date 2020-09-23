@@ -1,9 +1,12 @@
-name: Teste - IaC CI/CD - S3 Static WebSite
+name: Prodution - IaC CI/CD - S3 Static WebSite
+
+env:
+  env: test
 
 on:
   push:
     branches:
-      - teste-diego
+      - test
 
 jobs:
   deploy:
@@ -11,16 +14,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:    
     - uses: actions/checkout@v2
-    
-    - name: Set Environment Prodution
-      if: endsWith(github.ref, 'master')
-      id: environment
-      run: echo "::set-output name=ENV::prod"
-
-    - name: Set Environment Develop
-      if: endsWith(github.ref, 'develop')
-      id: environment
-      run: echo "::set-output name=ENV::dev"        
 
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -31,20 +24,16 @@ jobs:
 
     - name: Deploy via CloudFormation
       run: |
-        ENV=${{steps.environment.outputs.ENV}}
+        
+        ENV=${{env.env}}
 
-        Name=$(jq           '.Name'       $ENV/parameters.json | sed -e 's/"//g')
-        StackName=$(jq      '.StackName'  $ENV/parameters.json | sed -e 's/"//g')
-        PolicyJsonFile=$(jq '.PolicyJson' $ENV/parameters.json | sed -e 's/"//g')
+        Name=$(jq      '.Name'      $ENV/parameters.json | sed -e 's/"//g')
+        StackName=$(jq '.StackName' $ENV/parameters.json | sed -e 's/"//g')
 
         aws cloudformation deploy --template-file template.yml \
                                   --stack-name $StackName \
                                   --parameter-overrides  Name=$Name \
                                   --tags Name=Aphrodite Author="Diego Lirio"
 
-        policyJson=$(cat ./$ENV/$PolicyJsonFile)
-        aws s3api put-bucket-policy --bucket $Name --policy "$policyJson"                                  
-    
-
-    
-    
+        policyJson=$(cat ./$ENV/bucket-policy.json)
+        aws s3api put-bucket-policy --bucket $Name --policy "$policyJson"

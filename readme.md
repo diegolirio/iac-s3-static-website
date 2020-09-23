@@ -16,6 +16,14 @@ on:
       - staging
 ```      
 
+### Create new Folder 
+
+```
+- dev
+- prod
+- new_folder
+```
+
 ## Undeploy ( Delete Stack)
 
 
