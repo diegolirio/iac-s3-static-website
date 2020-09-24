@@ -1,4 +1,4 @@
-name: Prodution - IaC CI/CD - S3 Static WebSite
+name: Develop - IaC CI/CD - S3 Static WebSite
 
 env:
   env: test
@@ -6,34 +6,34 @@ env:
 on:
   push:
     branches:
-      - test
+      - eprogramar
 
 jobs:
   deploy:
     name: deploy
     runs-on: ubuntu-latest
-    steps:    
-    - uses: actions/checkout@v2
+    steps:
+      - uses: actions/checkout@v2
 
-    - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-east-2
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
 
-    - name: Deploy via CloudFormation
-      run: |
-        
-        ENV=${{env.env}}
+      - name: Deploy via CloudFormation
+        run: |
 
-        Name=$(jq      '.Name'      $ENV/parameters.json | sed -e 's/"//g')
-        StackName=$(jq '.StackName' $ENV/parameters.json | sed -e 's/"//g')
+          ENV=${{env.env}}
 
-        aws cloudformation deploy --template-file template.yml \
-                                  --stack-name $StackName \
-                                  --parameter-overrides  Name=$Name \
-                                  --tags Name=Aphrodite Author="Diego Lirio"
+          Name=$(jq      '.Name'      $ENV/parameters.json | sed -e 's/"//g')
+          StackName=$(jq '.StackName' $ENV/parameters.json | sed -e 's/"//g')
 
-        policyJson=$(cat ./$ENV/bucket-policy.json)
-        aws s3api put-bucket-policy --bucket $Name --policy "$policyJson"
+          aws cloudformation deploy --template-file template.yml \
+                                    --stack-name $StackName \
+                                    --parameter-overrides  Name=$Name \
+                                    --tags Name=Aphrodite Author="Diego Lirio"
+
+          policyJson=$(cat ./$ENV/bucket-policy.json)
+          aws s3api put-bucket-policy --bucket $Name --policy "$policyJson"
