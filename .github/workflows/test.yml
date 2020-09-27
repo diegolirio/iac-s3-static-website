@@ -1,7 +1,7 @@
 name: Develop - IaC CI/CD - S3 Static WebSite
 
 env:
-  env: test
+  env: staging
 
 on:
   push:

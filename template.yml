@@ -1,6 +1,6 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: >
-  Template S3 Static Web Site Aphrodite
+  Template S3 Static Web Site
 
 Parameters:
   Name:
@@ -8,7 +8,7 @@ Parameters:
     Type: String
 
 Resources:
-  S3StaticWebSiteAphrodite:
+  S3StaticWebSite:
     Type: AWS::S3::Bucket
     Properties: 
       #AccelerateConfiguration: 
